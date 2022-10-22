@@ -83,7 +83,9 @@ public class SBinTre<T> {
     }
 
     public boolean leggInn(T verdi) {
-        throw new UnsupportedOperationException("Ikke kodet ennå!");
+        Node root = rot;
+        root.forelder = null;
+        return true;
     }
 
     public boolean fjern(T verdi) {
