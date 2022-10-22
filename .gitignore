@@ -1,9 +1,6 @@
 .github/
 .gradle/
 .idea/
-gradle/
-build.gradle
-gradle.properties
 *.log
 src/main/java/no/oslomet/cs/algdat/Oblig2/testing.java
 /build/
