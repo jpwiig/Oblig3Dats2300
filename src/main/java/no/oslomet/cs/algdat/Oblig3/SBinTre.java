@@ -3,6 +3,7 @@ package no.oslomet.cs.algdat.Oblig3;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Objects;
 import java.util.StringJoiner;
 
 public class SBinTre<T> {
@@ -83,8 +84,28 @@ public class SBinTre<T> {
     }
 
     public boolean leggInn(T verdi) {
-        Node root = rot;
-        root.forelder = null;
+        Objects.requireNonNull(verdi, "Null verdier er ikke lov!!");
+        Node<T>currentNode =  rot;
+        Node<T>nextNode = null;
+        int compare = 0;
+        while (currentNode != null){
+            currentNode = nextNode;
+            compare = comp.compare(verdi, currentNode.verdi);
+            nextNode =  compare < 0 ? nextNode.venstre : nextNode.høyre;
+
+        }
+        //The node is a root
+        if (nextNode.forelder == null){
+            currentNode = new Node<>(verdi, null);
+            antall++;
+        }
+        if(nextNode.forelder!= null){
+            currentNode = new Node<>(verdi, nextNode);
+            antall++;
+        }
+        //The node is  leaf
+        //Is a inner Node
+
         return true;
     }
 
