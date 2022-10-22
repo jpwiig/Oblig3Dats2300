@@ -7,6 +7,13 @@ import java.util.Objects;
 import java.util.StringJoiner;
 
 public class SBinTre<T> {
+    public static void main(String[] args) {
+        //test for the tree
+        Integer[] a = {4,7,2,9,5,10,8,1,3,6};
+        SBinTre<Integer> tre = new SBinTre<>(Comparator.naturalOrder());
+        for (int verdi : a) {tre.leggInn(verdi); }
+        System.out.println(tre.antall()); // Utskrift: 10
+    }
     private static final class Node<T>   // en indre nodeklasse
     {
         private T verdi;                   // nodens verdi
@@ -92,21 +99,26 @@ public class SBinTre<T> {
             currentNode = nextNode;
             compare = comp.compare(verdi, currentNode.verdi);
             nextNode =  compare < 0 ? nextNode.venstre : nextNode.høyre;
+            antall++;
+            //The node is a root
+
 
         }
-        //The node is a root
-        if (nextNode.forelder == null){
-            currentNode = new Node<>(verdi, null);
+
+        if (nextNode == null){
+            rot = currentNode;
             antall++;
         }
-        if(nextNode.forelder!= null){
+        else if (compare < 0){
+            currentNode.venstre =  nextNode;
+            antall++;
+        }
+        else{
+            //The node is  leaf
+            //Is a inner Node
             currentNode = new Node<>(verdi, nextNode);
             antall++;
         }
-        //The node is  leaf
-        if ()
-        //Is a inner Node
-
         return true;
     }
 
@@ -119,7 +131,13 @@ public class SBinTre<T> {
     }
 
     public int antall(T verdi) {
-        throw new UnsupportedOperationException("Ikke kodet ennå!");
+       if (!inneholder(verdi)) return 0;
+       int numberOfreturns = 0;
+       int length = antall();
+       for (int i = 0; i < length; i++){
+
+       }
+       return numberOfreturns;
     }
 
     public void nullstill() {
