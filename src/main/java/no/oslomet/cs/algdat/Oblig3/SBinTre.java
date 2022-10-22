@@ -104,6 +104,7 @@ public class SBinTre<T> {
             antall++;
         }
         //The node is  leaf
+        if ()
         //Is a inner Node
 
         return true;
