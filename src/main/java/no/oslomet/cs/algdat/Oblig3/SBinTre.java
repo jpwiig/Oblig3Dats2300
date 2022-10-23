@@ -134,8 +134,15 @@ public class SBinTre<T> {
        if (!inneholder(verdi)) return 0;
        int numberOfreturns = 0;
        int length = antall();
+       Node<T> currentLeaf= rot; //Starts at root, runs trought the entire
        for (int i = 0; i < length; i++){
-
+        //traverse the binary tree
+           while (currentLeaf != null){
+           if (i % 2 == 0) currentLeaf = currentLeaf.høyre;
+           if (i % 2 == 1) currentLeaf = currentLeaf.venstre;
+       }
+           //since were not checking which node has the same value you traverse with only the value
+       if (currentLeaf.verdi == verdi) numberOfreturns++;
        }
        return numberOfreturns;
     }
