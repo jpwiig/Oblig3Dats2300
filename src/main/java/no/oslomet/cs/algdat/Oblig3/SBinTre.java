@@ -9,23 +9,26 @@ import java.util.StringJoiner;
 public class SBinTre<T> {
     public static void main(String[] args) {
         //test for the tree
-    //  Integer[] a1 = {4,7,2,9,5,10,8,1,3,6};
-      // SBinTre<Integer> tre = new SBinTre<>(Comparator.naturalOrder());
-      // for (int verdi : a1) {
-        //   tre.leggInn(verdi);
-        // }
-        //System.out.println(tre.antall()); // Utskrift: 10
+         Integer[] a1 = {4,7,2,9,5,10,8,1,3,6};
+         SBinTre<Integer> tre = new SBinTre<>(Comparator.naturalOrder());
+         for (int verdi : a1) {
+           tre.leggInn(verdi);
+         }
+        //System.out.println("æ" + tre.antall()); // Utskrift: 10
 
-        Integer[] a = {4,7,2,9,4,10,8,7,4,6};
+        /*Integer[] a = {4, 7, 2, 9, 4, 10, 8, 7, 4, 6};
         SBinTre<Integer> tree = new SBinTre<>(Comparator.naturalOrder());
-            for (int verdi : a) { tree.leggInn(verdi); }
-        System.out.println(tree.antall()); // Utskrift: 10
-        System.out.println(tree.antall(5)); // Utskrift: 0
-        System.out.println(tree.antall(4)); // Utskrift: 3
-        System.out.println(tree.antall(7)); // Utskrift: 2
-        System.out.println(tree.antall(10)); // Utskrift: 1
+        for (int verdi : a) {
+            tree.leggInn(verdi);
+        }*/
+        //System.out.println(tree.antall(4)); // Utskrift: 3
+        //System.out.println(tree.antall(5)); // Utskrift: 0
+        //System.out.println(tree.antall(7)); // Utskrift: 2
+        //System.out.println(tree.antall(10)); // Utskrift: 1
+        //System.out.println(tree.antall()); // Utskrift: 10
 
     }
+
     private static final class Node<T>   // en indre nodeklasse
     {
         private T verdi;                   // nodens verdi
@@ -104,21 +107,21 @@ public class SBinTre<T> {
 
     public boolean leggInn(T verdi) {
         //rewritten from kompendie programkode 5.2.3
-        Objects.requireNonNull(verdi, "Null verdier er ikke lov!!");
-        Node<T>currentNode =  rot;
-        Node<T>prevNode = null;
+      //  Objects.requireNonNull(verdi, "Null verdier er ikke lov!!");
+        Node<T> currentNode = rot;
+        Node<T> nextNode = null;
         int compare = 0;
-        while (currentNode != null){
-            prevNode = currentNode;
+        while (currentNode != null) {
+            nextNode = currentNode;
             compare = comp.compare(verdi, currentNode.verdi);
-            currentNode =  compare < 0 ? currentNode.venstre : currentNode.høyre;
-            //The node is a root
+            currentNode = compare < 0 ? currentNode.venstre : currentNode.høyre;
 
         }
-        currentNode = new Node<>(verdi,prevNode);
-        if (prevNode == null) rot = currentNode;
-        else if (compare < 0) currentNode.venstre =  prevNode;
-        else currentNode.høyre = prevNode;
+
+        currentNode = new Node<>(verdi, nextNode);
+        if (nextNode == null) rot = currentNode;
+        else if (compare < 0) nextNode.venstre = currentNode;
+        else nextNode.høyre = currentNode;
 
         antall++;
         return true;
@@ -133,27 +136,26 @@ public class SBinTre<T> {
     }
 
     public int antall(T verdi) {
-        int numberOfreturns = 0;
-        int length = antall();
-        System.out.println("antall: " + length);
         Node<T> currentLeaf = rot;//Starts at root, runs trought the entire
-        if (inneholder(verdi)) {
-            //traverse the binary tree
-            // checks the parent
-            //since were not checking which node has the same value you traverse with only the value
-            // if (currentLeaf.verdi == verdi) numberOfreturns++; //checks value of root
-            while(currentLeaf != null){
-              //  System.out.println(currentLeaf.verdi);
-                currentLeaf = currentLeaf.høyre;
-                int com = comp.compare(verdi, currentLeaf.verdi);
-                if (com < 0) numberOfreturns++;
-                System.out.println(numberOfreturns);
+        int numberOfreturns = 0;
+        if (!inneholder(verdi)) return 0;
+        while (currentLeaf != null) {
+            // System.out.println(currentLeaf.verdi);
+            int com = comp.compare(verdi, currentLeaf.verdi);
+
+           if (com < 0) {
                 currentLeaf = currentLeaf.venstre;
             }
-    }  else {
-          return 0;
-      }
-       return numberOfreturns;
+           else {
+               if (com == 0) {
+                   numberOfreturns++;
+               }
+               currentLeaf = currentLeaf.høyre;//null
+
+           }
+        }
+        return numberOfreturns;
+
     }
 
     public void nullstill() {
