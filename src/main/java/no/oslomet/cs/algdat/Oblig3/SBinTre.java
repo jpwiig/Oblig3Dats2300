@@ -163,7 +163,15 @@ public class SBinTre<T> {
     }
 
     private static <T> Node<T> førstePostorden(Node<T> p) {
-        throw new UnsupportedOperationException("Ikke kodet ennå!");
+        //traverse traverse traverse
+
+     if(p == null){
+
+     }
+     if (p.forelder == null){
+
+     }
+        return førstePostorden(p);
     }
 
     private static <T> Node<T> nestePostorden(Node<T> p) {
