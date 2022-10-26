@@ -4,27 +4,6 @@ package no.oslomet.cs.algdat.Oblig3;
 import java.util.*;
 
 public class SBinTre<T> {
-    public static void main(String[] args) {
-        //test for the tree
-        Integer[] a1 = {4, 7, 2, 9, 5, 10, 8, 1, 3, 6};
-        SBinTre<Integer> tre = new SBinTre<>(Comparator.naturalOrder());
-        for (int verdi : a1) {
-            tre.leggInn(verdi);
-        }
-        //System.out.println("æ" + tre.antall()); // Utskrift: 10
-
-        /*Integer[] a = {4, 7, 2, 9, 4, 10, 8, 7, 4, 6};
-        SBinTre<Integer> tree = new SBinTre<>(Comparator.naturalOrder());
-        for (int verdi : a) {
-            tree.leggInn(verdi);
-        }*/
-        //System.out.println(tree.antall(4)); // Utskrift: 3
-        //System.out.println(tree.antall(5)); // Utskrift: 0
-        //System.out.println(tree.antall(7)); // Utskrift: 2
-        //System.out.println(tree.antall(10)); // Utskrift: 1
-        //System.out.println(tree.antall()); // Utskrift: 10
-
-    }
 
     private static final class Node<T>   // en indre nodeklasse
     {
@@ -189,7 +168,13 @@ public class SBinTre<T> {
     }
 
     public void postorden(Oppgave<? super T> oppgave) {
-       oppgave.utførOppgave();
+        Node<T> p = førstePostorden(rot);
+
+
+       while(p != null){
+           oppgave.utførOppgave(p.verdi);
+           p = nestePostorden(p);
+       }
     }
 
     public void postordenRecursive(Oppgave<? super T> oppgave) {
@@ -198,8 +183,14 @@ public class SBinTre<T> {
 
     private void postordenRecursive(Node<T> p, Oppgave<? super T> oppgave) {
         //recurse baby!
-        Node yes = førstePostorden(p);
-        postordenRecursive(yes.høyre,oppgave.utførOppgave());
+        if (p == null)return;
+        if (p.venstre != null) {
+            postordenRecursive(p.venstre, oppgave);//recursive call for the left side
+        }
+         if (p.høyre != null) {
+             postordenRecursive(p.høyre, oppgave); //recursive call for the right side
+         }
+         oppgave.utførOppgave(p.verdi);
     }
 
     public ArrayList<T> serialize() {

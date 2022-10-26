@@ -10,3 +10,5 @@ Oppgaven er levert av følgende student:
 I oppgave 1 så tok jeg inspirasjon fra programmkoden
 
 I oppgave 2 så brukte jeg en ... til å ...
+
+I testen så valgte jeg å kommentere ut testene for oppgave 5 & 6, dette er fordi at jeg har lyst til å gjøre disse på en seperat branch, men vil ha en fungerende oblig som har minstekravene. Dette er ting som jeg vet at det er godt mulig at jeg ikke får på plass før innleveringsfristen. 
