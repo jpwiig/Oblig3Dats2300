@@ -7,6 +7,6 @@ Oppgaven er levert av følgende student:
 
 # Oppgavebeskrivelse
 
-I oppgave 1 så gikk jeg frem ved å ...
+I oppgave 1 så tok jeg inspirasjon fra programmkoden
 
 I oppgave 2 så brukte jeg en ... til å ...

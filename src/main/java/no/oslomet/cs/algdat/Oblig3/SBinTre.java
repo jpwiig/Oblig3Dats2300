@@ -6,11 +6,11 @@ import java.util.*;
 public class SBinTre<T> {
     public static void main(String[] args) {
         //test for the tree
-         Integer[] a1 = {4,7,2,9,5,10,8,1,3,6};
-         SBinTre<Integer> tre = new SBinTre<>(Comparator.naturalOrder());
-         for (int verdi : a1) {
-           tre.leggInn(verdi);
-         }
+        Integer[] a1 = {4, 7, 2, 9, 5, 10, 8, 1, 3, 6};
+        SBinTre<Integer> tre = new SBinTre<>(Comparator.naturalOrder());
+        for (int verdi : a1) {
+            tre.leggInn(verdi);
+        }
         //System.out.println("æ" + tre.antall()); // Utskrift: 10
 
         /*Integer[] a = {4, 7, 2, 9, 4, 10, 8, 7, 4, 6};
@@ -104,10 +104,12 @@ public class SBinTre<T> {
 
     public boolean leggInn(T verdi) {
         //rewritten from kompendie programkode 5.2.3
-      //  Objects.requireNonNull(verdi, "Null verdier er ikke lov!!");
+        Objects.requireNonNull(verdi, "Null verdier er ikke lov!!");
         Node<T> currentNode = rot;
         Node<T> nextNode = null;
+        //comparator
         int compare = 0;
+        //as long as currentnode is not null
         while (currentNode != null) {
             nextNode = currentNode;
             compare = comp.compare(verdi, currentNode.verdi);
@@ -140,16 +142,15 @@ public class SBinTre<T> {
             // System.out.println(currentLeaf.verdi);
             int com = comp.compare(verdi, currentLeaf.verdi);
 
-           if (com < 0) {
+            if (com < 0) {
                 currentLeaf = currentLeaf.venstre;
-            }
-           else {
-               if (com == 0) {
-                   numberOfreturns++;
-               }
-               currentLeaf = currentLeaf.høyre;//null
+            } else {
+                if (com == 0) {
+                    numberOfreturns++;
+                }
+                currentLeaf = currentLeaf.høyre;//null
 
-           }
+            }
         }
         return numberOfreturns;
 
@@ -160,29 +161,35 @@ public class SBinTre<T> {
     }
 
     private static <T> Node<T> førstePostorden(Node<T> p) {
-        while(true){
+        //from the compendium, mostly (5.1.7 h)
+        while (true) {
             if (p.venstre != null) {
-                    p = p.venstre;
+                p = p.venstre;
             } else if (p.høyre != null) {
                 p = p.høyre;
             } else {
-               return p;
+                return p;
             }
         }
-
     }
 
     private static <T> Node<T> nestePostorden(Node<T> p) {
+
         if (p.forelder == null) return null;
+        //har høyrenoden en verdi?
+        if (p == p.forelder.høyre) return p.forelder;
+        else if (p.forelder.venstre != null) {
+            if (p.forelder.høyre == null) return p.forelder;
+            //else if (p.forelder.venstre != null) return p;
+        }
+        return førstePostorden(p.forelder.høyre);
 
-        if (p.forelder.høyre != null) p = p.forelder.høyre;
-        else if (p.forelder.venstre != null) p = p.forelder.venstre;
+        // else if (p.forelder.høyre == null) return p;
 
-        return p;
-     }
+    }
 
     public void postorden(Oppgave<? super T> oppgave) {
-        throw new UnsupportedOperationException("Ikke kodet ennå!");
+       oppgave.utførOppgave();
     }
 
     public void postordenRecursive(Oppgave<? super T> oppgave) {
@@ -190,7 +197,9 @@ public class SBinTre<T> {
     }
 
     private void postordenRecursive(Node<T> p, Oppgave<? super T> oppgave) {
-        throw new UnsupportedOperationException("Ikke kodet ennå!");
+        //recurse baby!
+        Node yes = førstePostorden(p);
+        postordenRecursive(yes.høyre,oppgave.utførOppgave());
     }
 
     public ArrayList<T> serialize() {
