@@ -92,14 +92,14 @@ public class SBinTre<T> {
         while (currentNode != null) {
             nextNode = currentNode;
             compare = comp.compare(verdi, currentNode.verdi);
-            currentNode = compare < 0 ? currentNode.venstre : currentNode.høyre;
+            currentNode = compare < 0 ? currentNode.venstre : currentNode.høyre; //compare < 0 = currentNode = left child, else currentNode = rightchild
 
         }
-
+        //currentNode is null, creates a new node
         currentNode = new Node<>(verdi, nextNode);
-        if (nextNode == null) rot = currentNode;
-        else if (compare < 0) nextNode.venstre = currentNode;
-        else nextNode.høyre = currentNode;
+        if (nextNode == null) rot = currentNode; //if nextNode = null, root = currentNode
+        else if (compare < 0) nextNode.venstre = currentNode; //if compare < 0 left child is the current node
+        else nextNode.høyre = currentNode; //else right child is current
 
         antall++;
         return true;
@@ -118,20 +118,19 @@ public class SBinTre<T> {
         int numberOfreturns = 0;
         if (!inneholder(verdi)) return 0;
         while (currentLeaf != null) {
-            // System.out.println(currentLeaf.verdi);
             int com = comp.compare(verdi, currentLeaf.verdi);
 
             if (com < 0) {
-                currentLeaf = currentLeaf.venstre;
+                currentLeaf = currentLeaf.venstre; //if the values does not match, continue the traverse
             } else {
                 if (com == 0) {
-                    numberOfreturns++;
+                    numberOfreturns++; // if it is the same add to the counter
                 }
-                currentLeaf = currentLeaf.høyre;//null
+                currentLeaf = currentLeaf.høyre; //checks the right
 
             }
         }
-        return numberOfreturns;
+        return numberOfreturns; //return the number
 
     }
 
@@ -142,38 +141,38 @@ public class SBinTre<T> {
     private static <T> Node<T> førstePostorden(Node<T> p) {
         //from the compendium, mostly (5.1.7 h)
         while (true) {
+            // if the left child has a value, p equals to left child
             if (p.venstre != null) {
                 p = p.venstre;
             } else if (p.høyre != null) {
-                p = p.høyre;
+                p = p.høyre; //same as with left, but with right
             } else {
-                return p;
+                return p; //returns the first in post order
             }
         }
     }
 
     private static <T> Node<T> nestePostorden(Node<T> p) {
-
+        //finds the next value in post order
         if (p.forelder == null) return null;
-        //har høyrenoden en verdi?
+        //if p equals to the right child of the parent, returns the parent
         if (p == p.forelder.høyre) return p.forelder;
+        // if the parent is not not null
         else if (p.forelder.venstre != null) {
-            if (p.forelder.høyre == null) return p.forelder;
-            //else if (p.forelder.venstre != null) return p;
+            if (p.forelder.høyre == null) return p.forelder; //if there is only a left node, next is the parent
         }
         return førstePostorden(p.forelder.høyre);
 
-        // else if (p.forelder.høyre == null) return p;
 
     }
 
     public void postorden(Oppgave<? super T> oppgave) {
-        Node<T> p = førstePostorden(rot);
+        Node<T> p = førstePostorden(rot); //finds the first post order
 
 
        while(p != null){
-           oppgave.utførOppgave(p.verdi);
-           p = nestePostorden(p);
+           oppgave.utførOppgave(p.verdi); //calls the interface utføroppgave with the value of p
+           p = nestePostorden(p);   //finds and set the next post order during the entire tree
        }
     }
 
@@ -184,13 +183,14 @@ public class SBinTre<T> {
     private void postordenRecursive(Node<T> p, Oppgave<? super T> oppgave) {
         //recurse baby!
         if (p == null)return;
+        //if it is a value at the left side
         if (p.venstre != null) {
             postordenRecursive(p.venstre, oppgave);//recursive call for the left side
         }
          if (p.høyre != null) {
              postordenRecursive(p.høyre, oppgave); //recursive call for the right side
          }
-         oppgave.utførOppgave(p.verdi);
+         oppgave.utførOppgave(p.verdi); // calls utførOppgave
     }
 
     public ArrayList<T> serialize() {
