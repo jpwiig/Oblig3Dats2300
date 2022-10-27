@@ -106,7 +106,22 @@ public class SBinTre<T> {
     }
 
     public boolean fjern(T verdi) {
-        throw new UnsupportedOperationException("Ikke kodet ennå!");
+        if (verdi == null) return false;
+        Node<T> p = rot, q = null;
+        while (p != null) {
+            int cmp = comp.compare(verdi, p.verdi);
+            if (cmp < 0) {
+                q = p;
+                p = p.venstre;
+            } else if (cmp > 0) {
+                q = p;
+                p = p.høyre;
+            } else break;
+        }
+        if (p == null) return false;
+        if (p.venstre == null || p.høyre == null) {
+            Node<T> b = p.venstre != null ? p.venstre : p.høyre;
+        }
     }
 
     public int fjernAlle(T verdi) {
@@ -157,7 +172,7 @@ public class SBinTre<T> {
         if (p.forelder == null) return null;
         //if p equals to the right child of the parent, returns the parent
         if (p == p.forelder.høyre) return p.forelder;
-        // if the parent is not not null
+            // if the parent is not not null
         else if (p.forelder.venstre != null) {
             if (p.forelder.høyre == null) return p.forelder; //if there is only a left node, next is the parent
         }
@@ -170,10 +185,10 @@ public class SBinTre<T> {
         Node<T> p = førstePostorden(rot); //finds the first post order
 
 
-       while(p != null){
-           oppgave.utførOppgave(p.verdi); //calls the interface utføroppgave with the value of p
-           p = nestePostorden(p);   //finds and set the next post order during the entire tree
-       }
+        while (p != null) {
+            oppgave.utførOppgave(p.verdi); //calls the interface utføroppgave with the value of p
+            p = nestePostorden(p);   //finds and set the next post order during the entire tree
+        }
     }
 
     public void postordenRecursive(Oppgave<? super T> oppgave) {
@@ -182,23 +197,39 @@ public class SBinTre<T> {
 
     private void postordenRecursive(Node<T> p, Oppgave<? super T> oppgave) {
         //recurse baby!
-        if (p == null)return;
+        if (p == null) return;
         //if it is a value at the left side
         if (p.venstre != null) {
             postordenRecursive(p.venstre, oppgave);//recursive call for the left side
         }
-         if (p.høyre != null) {
-             postordenRecursive(p.høyre, oppgave); //recursive call for the right side
-         }
-         oppgave.utførOppgave(p.verdi); // calls utførOppgave
+        if (p.høyre != null) {
+            postordenRecursive(p.høyre, oppgave); //recursive call for the right side
+        }
+        oppgave.utførOppgave(p.verdi); // calls utførOppgave
     }
 
     public ArrayList<T> serialize() {
-        throw new UnsupportedOperationException("Ikke kodet ennå!");
+        Node<T> current = rot; //starts at root;
+        ArrayDeque<Node<T>> deque = new ArrayDeque<>();
+        ArrayList<T> list = new ArrayList<>();
+        deque.addLast(current);
+        while (!deque.isEmpty()) {
+            Node<T> a = deque.pop();
+            list.add(a.verdi);
+            if (a.venstre != null) deque.add(a.venstre);
+            if (a.høyre != null) deque.add(a.høyre);
+
+        }
+
+        return list;
     }
 
     static <K> SBinTre<K> deserialize(ArrayList<K> data, Comparator<? super K> c) {
-        throw new UnsupportedOperationException("Ikke kodet ennå!");
+        SBinTre<K> tre = new SBinTre<>(c);
+        for (K i : data) {
+            tre.leggInn(i);
+        }
+        return tre;
     }
 
 
