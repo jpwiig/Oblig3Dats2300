@@ -1,10 +1,11 @@
 # Obligatorisk oppgave 3 i Algoritmer og Datastrukturer
+# **Oppgaver som ikke er krav av innleveringen** (oppgave 5 og 6)
 
 Denne oppgaven er en innlevering i Algoritmer og Datastrukturer. 
 Oppgaven er levert av følgende student:
 * Jon Petter Wiig, s364697@oslomet.no
 
-
+ 
 # Oppgavebeskrivelse
 
 I oppgave 1 så tok jeg inspirasjon fra [programmkode 5.2.3 a](https://www.cs.hioa.no/~ulfu/appolonius/kap5/2/kap52.html#5.2.3). Det pogrammkoden gjør er den bruker en comparator til å sjekke hvilket barn som skal bli lagt til. Hvis noden som er nå er større så går den til venstre, hvis den er større så går den til høyre. 
