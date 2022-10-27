@@ -20,7 +20,7 @@ I oppgave 1 så tok jeg inspirasjon fra [programmkode 5.2.3 a](https://www.cs.hi
 
 I oppgave 2 så brukte jeg comparatoren igjen med å sjekke de forskjellige nivåene i treeet. Jeg valgte å bruke nivåordent(fra venstre til høyre fra hvert nivå før man gikk videre) til å traverse igjennom treet og sjekke. Dette er fordi at det var lettere i øyeblikket å gjøre. Her var det også viktig at oppgave 1 var riktig, hvis ikke så fungerte ikke oppgave 2, så jeg måtte gå litt tilbake i oppgave 1 for  å sjekke at alt fungerte, da man **TEKNISK SETT** kan bestå testen med å bare skrive  `Antall++` i slutten av metoden.
 
-I oppgave 3 så travarserer vi nedover i postorden. Vi sjekker først om p er null, hvis ikke så går vi nedover til vi finner første i postorden, etter det så returnerer vi p, som er den første i postorden. I neste postorden så gjør vi mye av det samme. Se kommentarer i kode
+I oppgave 3 så traverserer vi nedover i postorden. Vi sjekker først om p er null, hvis ikke så går vi nedover til vi finner første i postorden, etter det så returnerer vi p, som er den første i postorden. I neste postorden så gjør vi mye av det samme. Se kommentarer i kode. Jeg bruker deler av kompendiet seksjon 5.1.7 (5.1.7 h har jeg brukt som inspriasjonskilde for første postorden, med essensielle endringer)
 
 I oppgave 4 så bruker jeg først metodene i oppgave 3 for å gå gjennom hele treet. Jeg bruker førstePostorden(rot) til å finne ut hvor postorden skal starte, da jeg finner første postorden med rotnoden, så bruker jeg nestepostorden() til å traversere resten av treet. 
 
